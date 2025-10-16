@@ -1,0 +1,77 @@
+## .NET / Visual Studio ignore rules for batch-automation-mock
+
+# Build output
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Tt]est[Rr]esult*/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]*/
+[Aa][Rr][Mm]64/
+[Bb]uild[Ll]og.*.xml
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.userprefs
+*.vscode/
+*.code-workspace
+
+# Resharper / Rider / VSCode caches
+_ReSharper*/
+.idea/
+*.sln.iml
+
+# NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+*.nuget.props
+*.nuget.targets
+
+# Coverage / test outputs
+coverage*/
+*.coverage
+*.coveragexml
+*.trx
+TestResults/
+
+# Ignore .NET intermediate and publish folders
+**/bin/
+**/obj/
+**/publish/
+**/out/
+
+# Exclude runtime build artifacts, but keep ResponseFile test data
+!**/ResponseFile/**
+!**/ResponseFile/**/*
+
+# Logs and temp
+*.log
+*.tlog
+*.tmp
+*.temp
+*.pidb
+*.svclog
+*.cache
+*.pdb
+
+# OS-specific junk
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# JetBrains Rider / Visual Studio metadata
+*.DotSettings.user
+*.sln.docstates
+
+# Optional: ignore VS test host files
+*.vstest.*
+.vstest/
+.vsTestExplorer/

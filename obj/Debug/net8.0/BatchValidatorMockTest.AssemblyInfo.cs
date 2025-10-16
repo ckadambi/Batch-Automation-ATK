@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BatchValidatorMockTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+31786b599ce7867c156cbb46018c68a5a1ee7fad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0edb9e859119514798a1e858aff6f1919edb9706")]
 [assembly: System.Reflection.AssemblyProductAttribute("BatchValidatorMockTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BatchValidatorMockTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
