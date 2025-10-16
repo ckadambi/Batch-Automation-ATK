@@ -95,6 +95,6 @@ jobs:
           files: |
             **/TestResults/*.trx
             **/test-results.trx
-          check_name: "Batch Job Test Results"
+          check_name: "Batch Job Test Results Summary"
           comment_mode: off          # set to "changes" if you want PR comments only on changes
           fail_on: nothing           # do not fail this step; rely on 'dotnet test' to fail the job
