@@ -1,0 +1,62 @@
+# Azure DevOps Pipeline for batch-automation-mock
+# Builds, tests, publishes TRX + coverage artifacts
+trigger:
+  - main
+  - develop
+
+pr:
+  - main
+  - develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  BuildConfiguration: 'Release'
+  DOTNET_VERSION: '8.0.x'
+
+steps:
+  - task: UseDotNet@2
+    displayName: 'Use .NET $(DOTNET_VERSION)'
+    inputs:
+      version: '$(DOTNET_VERSION)'
+      includePreviewVersions: false
+
+  - script: dotnet --info
+    displayName: 'Dotnet Info'
+
+  - task: Cache@2
+    displayName: 'Cache NuGet packages'
+    inputs:
+      key: 'nuget | "$(Agent.OS)" | **/*.csproj'
+      restoreKeys: |
+        nuget | "$(Agent.OS)"
+      path: ~/.nuget/packages
+
+  - script: dotnet restore ./BatchValidatorMockTest.sln
+    displayName: 'Restore'
+
+  - script: dotnet build ./BatchValidatorMockTest.sln -c $(BuildConfiguration) --no-restore
+    displayName: 'Build'
+
+  - script: |
+      dotnet test ./BatchValidatorMockTest.sln -c $(BuildConfiguration) --no-build         --logger "trx;LogFileName=test-results.trx"         /p:CollectCoverage=true         /p:CoverletOutput=$(Build.SourcesDirectory)/coverage/         /p:CoverletOutputFormat=opencover
+    displayName: 'Test (with TRX + coverage)'
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results (TRX)'
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFormat: 'VSTest'
+      testResultsFiles: '**/*.trx'
+      searchFolder: '$(System.DefaultWorkingDirectory)'
+      testRunTitle: 'xUnit Tests'
+      failTaskOnFailedTests: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Coverage Artifact'
+    condition: succeededOrFailed()
+    inputs:
+      PathtoPublish: '$(Build.SourcesDirectory)/coverage'
+      ArtifactName: 'coverage'
+      publishLocation: 'Container'

@@ -1,0 +1,58 @@
+[*.cs]
+
+# CS8603: Possible null reference return.
+dotnet_diagnostic.CS8603.severity = none
+
+# CS8618: Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+dotnet_diagnostic.CS8618.severity = none
+
+# CS8604: Possible null reference argument.
+dotnet_diagnostic.CS8604.severity = none
+
+root = true
+
+# Applies to all files
+[*]
+charset = utf-8
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Applies only to C# files
+[*.cs]
+indent_style = space
+indent_size = 4
+
+# Require "this." for member access
+dotnet_style_qualification_for_field = true:suggestion
+dotnet_style_qualification_for_property = true:suggestion
+dotnet_style_qualification_for_method = true:suggestion
+dotnet_style_qualification_for_event = true:suggestion
+
+# Naming rules
+dotnet_naming_rule.private_fields_should_be_camelcase.severity = warning
+dotnet_naming_rule.private_fields_should_be_camelcase.symbols = private_fields
+dotnet_naming_rule.private_fields_should_be_camelcase.style = camel_case
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_symbols.private_fields.required_modifiers =
+
+dotnet_naming_style.camel_case.capitalization = camel_case
+dotnet_naming_style.camel_case.required_prefix = _
+dotnet_naming_style.camel_case.required_suffix =
+
+# Require braces for all control blocks
+csharp_prefer_braces = true:warning
+
+# Require expression-bodied members where possible
+csharp_style_expression_bodied_methods = true:suggestion
+csharp_style_expression_bodied_properties = true:suggestion
+
+# Prefer object/collection initializers
+dotnet_style_object_initializer = true:suggestion
+dotnet_style_collection_initializer = true:suggestion
+
+# Prefer null checks with pattern matching
+dotnet_style_n
+
