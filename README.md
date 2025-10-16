@@ -1,35 +1,26 @@
-# BatchValidatorMockTest
+# batch-job-automation-mock
 
-A focused **xUnit** test project targeting **.NET 8.0** for validating batch-processing logic with deterministic fixtures. 
-The solution uses a simple `BatchValidatorMockTest.sln` with one or more test projects. Test assets under `ResponseFile/` are copied to the test output for easy access during runs.
+**Last Updated:** 2025-10-16
 
-> _Updated on 2025-10-16_
+## 🧩 Overview
+**batchJob-automation-mock** is a **.NET 8.0 xUnit test suite** built to validate batchJob-processing logic using deterministic mock data files of Azure jobs log.  
+It ensures consistent and repeatable test runs both locally and in CI.
 
-## ✨ Features
+---
 
-- **.NET 8.0** test project (`net8.0`) with nullable reference types enabled
-- **xUnit 2.5.0** with **Microsoft.NET.Test.Sdk 17.14.1** and **xunit.runner.visualstudio 2.5.0**
-- Test data in `ResponseFile/**` is **always copied** to the output directory
-- Works with **Visual Studio 2022** (latest) and **`dotnet` CLI**
-- CI-friendly via `dotnet test` with TRX output
+## ⚙️ Tech Stack
 
-## 🧰 Tech Stack
+| Category | Details |
+|-----------|----------|
+| **Language / Runtime** | C# / .NET 8.0 |
+| **Test Framework** | xUnit 2.5.0 |
+| **Test Runner / SDK** | Microsoft.NET.Test.Sdk 17.14.1 + xunit.runner.visualstudio 2.5.0 |
+| **Coverage Tool** | coverlet.collector 6.0.0 (Cobertura) |
+| **CI/CD** | GitHub Actions |
+| **IDE Support** | Visual Studio 2022 / VS Code / JetBrains Rider |
+| **OS Targets** | Windows, Linux, macOS |
 
-- **Target Framework**: `net8.0`
-- **SDK**: .NET SDK **8.0.x**
-- **Test Framework**: xUnit **2.5.0**
-- **Runner**: `xunit.runner.visualstudio` **2.5.0**
-- **Test SDK**: `Microsoft.NET.Test.Sdk` **17.14.1**
-
-## 📦 Prerequisites
-
-- Install the **.NET 8 SDK**.
-- (Optional) Visual Studio 2022 (latest) with the **.NET** workload.
-
-Check your SDK:
-```bash
-dotnet --info
-```
+---
 
 ## 🗂️ Project Structure
 
@@ -37,113 +28,111 @@ dotnet --info
 BatchValidatorMockTest.sln
 └─ tests/BatchValidatorMockTest/
    ├─ BatchValidatorMockTest.csproj
+   ├─ Helpers/
+   │  └─ MockHelper.cs
    ├─ ResponseFile/
-   │  ├─ ... test payloads (json, txt, csv)
-   └─ UnitTests/
-      └─ *.cs
+   │  ├─ Job1mockSuccess.json
+   │  ├─ Job1mockFailure.json
+   │  ├─ Job1mockSuccess.txt
+   │  └─ Job1mockFailure.txt
+   └─ Tests/
+      └─ BatchValidatorTests.cs
 ```
 
-### `ResponseFile/` assets
+- **ResponseFile/** → static test assets copied to output for deterministic tests.
+- **Helpers/** → utility functions (e.g., `MockHelper` for reading files safely).
+- **Tests/** → all xUnit test classes following Arrange–Act–Assert style.
 
-The csproj includes:
-```xml
-<ItemGroup>
-  <None Update="ResponseFile\**\*">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-  </None>
-</ItemGroup>
-```
+---
 
-At test runtime, files will be available under the test's output directory. You can read them like this:
+## 🧪 Testing Pattern
 
+Example usage:
 ```csharp
-using System.IO;
-
-string Root() => AppContext.BaseDirectory; // bin/Debug/net8.0/
-
-string ReadResponse(string fileName)
-{
-    var path = Path.Combine(Root(), "ResponseFile", fileName);
-    return File.ReadAllText(path);
-}
+var path = Path.Combine(AppContext.BaseDirectory, "ResponseFile", "Job1", "Job1mockSuccess.json");
+var mock = MockHelper.LoadMockResponse(path);
+Assert.Contains("ExpectedValue", mock);
 ```
 
-> Tip: Prefer `AppContext.BaseDirectory` over relative paths so the code works in both CLI and Visual Studio runners.
+**Guidelines**
+- Keep all mock data inside `ResponseFile/`.
+- Use `AppContext.BaseDirectory` and `Path.Combine` for cross-platform safety.
+- Name tests clearly: `MethodName_Should_ExpectedBehavior_When_Condition`.
 
-## 🚀 Quick Start
+---
 
-Restore, build, and test:
+## 🚀 CI Pipeline (GitHub Actions)
 
+Workflow file: `.github/workflows/ci.yml`
+
+### Jobs
+1. **build**  
+   - Restores and builds the solution.
+2. **BatchJobTestResults**  
+   - Runs tests with TRX + Cobertura coverage.
+   - Publishes summary and uploads artifacts.
+
+### Artifacts
+- `test-results.trx`
+- `coverage.cobertura.xml`
+
+### Test Summary
+✅ Total / Passed / Failed / Skipped chart visible in **Actions → Checks** tab.
+
+---
+
+## 🧾 Developer Workflow
+
+### Local commands
 ```bash
-# Restore
-dotnet restore ./BatchValidatorMockTest.sln
-
-# Build (Debug/Release)
-dotnet build ./BatchValidatorMockTest.sln -c Debug
-
-# Run tests with console + TRX
-dotnet test ./BatchValidatorMockTest.sln -c Debug \
-  --logger "console;verbosity=normal" \
-  --logger "trx;LogFileName=test-results.trx"
+dotnet restore
+dotnet build
+dotnet test --collect:"XPlat Code Coverage"
 ```
 
-Open in Visual Studio:
-1. Open `BatchValidatorMockTest.sln`
-2. Use **Test Explorer** → **Run All Tests**
-3. Inspect `Test Results` for outputs and TRX artifacts
+### CI triggers
+- Runs on every **push** or **pull request**.
 
-## ✅ Test Conventions
+---
 
-- Use **Arrange–Act–Assert** with clear naming:
-  - `MethodName_Should_ExpectedBehavior_When_Condition()`
-- Keep tests **isolated** (no network). Use `ResponseFile/` for deterministic inputs.
-- If you need additional assets, drop them under `ResponseFile/` — they’ll be copied automatically.
+## 🔒 Repository Hygiene
 
-## 📊 Code Coverage (optional)
+- `.gitignore` excludes:
+  ```
+  **/bin/
+  **/obj/
+  TestResults/
+  coverage/
+  .vs/
+  ```
+- Keeps build artifacts out of Git.
+- Only tracks test source and assets.
 
-With Coverlet collector:
+---
+
+## 📊 Coverage Report (optional)
+
+Generate an HTML report locally:
 ```bash
-dotnet test ./BatchValidatorMockTest.sln \
-  /p:CollectCoverage=true \
-  /p:CoverletOutput=./coverage/ \
-  /p:CoverletOutputFormat=opencover
+reportgenerator -reports:TestResults/*/coverage.cobertura.xml -targetdir:coverage-report
 ```
 
-Generate HTML (with reportgenerator installed):
-```bash
-reportgenerator -reports:coverage/coverage.opencover.xml -targetdir:coverage-report
+---
+
+## 🏗️ Badges
+
+Add a CI badge to your README for quick status visibility:
+```markdown
+![CI](https://github.com/<your-username>/<repo-name>/actions/workflows/ci.yml/badge.svg)
 ```
 
-## 🔧 Sample CI (GitHub Actions)
+---
 
-```yaml
-name: ci
-on:
-  push:
-  pull_request:
-jobs:
-  test:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "8.0.x"
-      - run: dotnet restore ./BatchValidatorMockTest.sln
-      - run: dotnet build ./BatchValidatorMockTest.sln -c Release --no-restore
-      - run: dotnet test ./BatchValidatorMockTest.sln -c Release --no-build --logger "trx;LogFileName=test-results.trx"
-```
+## 🧠 Summary
 
-## 🧪 Troubleshooting
+> **batch-automation-mock** is a clean, cross-platform .NET 8 test project validating batch-processing behavior through deterministic mocks.  
+> Fully automated with GitHub Actions, it provides coverage metrics and a professional, zero-noise repository setup.
 
-- **Tests not discovered**: Ensure package versions match the csproj (xUnit 2.5.0, Test SDK 17.14.1, runner 2.5.0).
-- **File not found**: Confirm assets live under `ResponseFile/` and verify they exist in `bin/<Config>/net8.0/ResponseFile/` after build.
-- **SDK mismatch**: Verify `dotnet --info` reports an 8.0.x SDK.
-- **Path separators**: Use `Path.Combine` rather than hardcoding `\\` or `/`.
-
-## 📜 License
-
-Specify your license (e.g., MIT).
 
 
 ## Ignore unwanted file
