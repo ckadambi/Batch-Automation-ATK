@@ -144,3 +144,29 @@ jobs:
 ## 📜 License
 
 Specify your license (e.g., MIT).
+
+
+## Ignore unwanted file
+  Simple 3-Step Permanent Fix
+
+1️⃣ Make sure the .gitignore is in the root of your repo
+
+AutomationSuite/.gitignore
+AutomationSuite/AutomationSuite.sln
+
+2️⃣ Tell Git to re-index using the ignore rules
+
+cd AutomationSuite
+git rm -r --cached .
+git add .
+git commit -m "Apply .gitignore and re-index project"
+
+3️⃣ Verify
+git status
+
+Now rebuild:
+
+dotnet clean
+dotnet build
+
+→ The build output (bin/, obj/, TestResults/, Screenshots/, etc.) will remain on disk but will no longer appear as “Changes” in Git.

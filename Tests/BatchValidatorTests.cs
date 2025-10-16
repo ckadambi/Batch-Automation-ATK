@@ -15,7 +15,7 @@ namespace BatchValidatorMockTest.Tests
         [Fact]
         public void Validate_Success_Job1JsonLogs_Valid_json()
         {
-            string relativePath = Path.Combine($"{_basePath}\\Job1\\", "Job1mockSuccess.json");
+            string relativePath = Path.Combine($"{_basePath}//Job1//", "Job1mockSuccess.json");
             string fullPath = Path.Combine(AppContext.BaseDirectory, relativePath);
 
             var mockResponse = MockHelper.LoadMockResponse(fullPath);
@@ -32,7 +32,7 @@ namespace BatchValidatorMockTest.Tests
         [Fact]
         public void Validate_Failure_Job1JsonLogs_DuringFileNotFound_json()
         {
-            string relativePath = Path.Combine($"{_basePath}\\Job1\\", "Job1mockFailure.json");
+            string relativePath = Path.Combine($"{_basePath}//Job1//", "Job1mockFailure.json");
             string fullPath = Path.Combine(AppContext.BaseDirectory, relativePath);
 
             var mockResponse = MockHelper.LoadMockResponse(fullPath);
@@ -50,7 +50,7 @@ namespace BatchValidatorMockTest.Tests
         {
             string expectedLogs = "Hello, User. This HTTP triggered function executed successfully.";
 
-            string relativePath = Path.Combine($"{_basePath}\\Job1\\", "Job1mockSuccess.txt");
+            string relativePath = Path.Combine($"{_basePath}//Job1//", "Job1mockSuccess.txt");
             string fullPath = Path.Combine(AppContext.BaseDirectory, relativePath);
 
             var mockResponse = MockHelper.LoadMockResponse(fullPath);
@@ -68,7 +68,7 @@ namespace BatchValidatorMockTest.Tests
         {
             string expectedLogs = "Validation failed. Returning 400 Bad Request";
 
-            string relativePath = Path.Combine($"{_basePath}\\Job1\\", "Job1mockFailure.txt");
+            string relativePath = Path.Combine($"{_basePath}//Job1//", "Job1mockFailure.txt");
             string fullPath = Path.Combine(AppContext.BaseDirectory, relativePath);
 
             var mockResponse = MockHelper.LoadMockResponse(fullPath);
