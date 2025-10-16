@@ -94,6 +94,7 @@ C:\Users\ckadambi\OneDrive - Altimetrik Corp\Everything\Intact\Solutions\BatchVa
 C:\Users\ckadambi\OneDrive - Altimetrik Corp\Everything\Intact\Solutions\BatchValidatorMockTest\obj\Debug\net8.0\BatchValidatorMockTest.AssemblyInfoInputs.cache
 C:\Users\ckadambi\OneDrive - Altimetrik Corp\Everything\Intact\Solutions\BatchValidatorMockTest\obj\Debug\net8.0\BatchValidatorMockTest.AssemblyInfo.cs
 C:\Users\ckadambi\OneDrive - Altimetrik Corp\Everything\Intact\Solutions\BatchValidatorMockTest\obj\Debug\net8.0\BatchValidatorMockTest.csproj.CoreCompileInputs.cache
+C:\Users\ckadambi\OneDrive - Altimetrik Corp\Everything\Intact\Solutions\BatchValidatorMockTest\obj\Debug\net8.0\BatchValidatorMockTest.sourcelink.json
 C:\Users\ckadambi\OneDrive - Altimetrik Corp\Everything\Intact\Solutions\BatchValidatorMockTest\obj\Debug\net8.0\BatchVal.7788590B.Up2Date
 C:\Users\ckadambi\OneDrive - Altimetrik Corp\Everything\Intact\Solutions\BatchValidatorMockTest\obj\Debug\net8.0\BatchValidatorMockTest.dll
 C:\Users\ckadambi\OneDrive - Altimetrik Corp\Everything\Intact\Solutions\BatchValidatorMockTest\obj\Debug\net8.0\refint\BatchValidatorMockTest.dll
