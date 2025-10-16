@@ -1,32 +1,46 @@
-## .NET / Visual Studio ignore rules for batch-automation-mock
+## ---------------------------------------
+##  batch-automation-mock .gitignore
+##  Clean setup for .NET 8 test projects
+## ---------------------------------------
 
-# Build output
-[Bb]in/
-[Oo]bj/
-[Ll]og/
-[Tt]est[Rr]esult*/
-[Rr]elease/
-x64/
-x86/
-[Aa][Rr][Mm]*/
-[Aa][Rr][Mm]64/
-[Bb]uild[Ll]og.*.xml
-
-# Visual Studio files
+# === Core build artifacts ===
+**/bin/
+**/obj/
+**/out/
+**/publish/
+TestResults/
+coverage/
 .vs/
-*.user
+
+# === Keep source test assets ===
+# Do not ignore ResponseFile folders (test data)
+!**/ResponseFile/**
+!**/ResponseFile/**/*
+
+# === Logs & temporary files ===
+*.log
+*.tmp
+*.temp
+*.cache
+*.pdb
+*.tlog
+*.svclog
+*.pidb
+
+# === IDE & tool configs ===
+.vscode/
+.idea/
 *.suo
+*.user
 *.userosscache
 *.userprefs
-*.vscode/
 *.code-workspace
-
-# Resharper / Rider / VSCode caches
+*.DotSettings.user
 _ReSharper*/
-.idea/
 *.sln.iml
+*.sln.docstates
 
-# NuGet
+# === NuGet & packages ===
 *.nupkg
 *.snupkg
 *.nuspec
@@ -34,44 +48,11 @@ packages/
 *.nuget.props
 *.nuget.targets
 
-# Coverage / test outputs
-coverage*/
-*.coverage
-*.coveragexml
-*.trx
-TestResults/
-
-# Ignore .NET intermediate and publish folders
-**/bin/
-**/obj/
-**/publish/
-**/out/
-
-# Exclude runtime build artifacts, but keep ResponseFile test data
-!**/ResponseFile/**
-!**/ResponseFile/**/*
-
-# Logs and temp
-*.log
-*.tlog
-*.tmp
-*.temp
-*.pidb
-*.svclog
-*.cache
-*.pdb
-
-# OS-specific junk
+# === OS files ===
 .DS_Store
 Thumbs.db
 ehthumbs.db
 desktop.ini
 
-# JetBrains Rider / Visual Studio metadata
-*.DotSettings.user
-*.sln.docstates
-
-# Optional: ignore VS test host files
-*.vstest.*
-.vstest/
-.vsTestExplorer/
+# === Misc ===
+[Bb]uild[Ll]og.*.xml
